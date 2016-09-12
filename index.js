@@ -3,9 +3,14 @@
 
 module.exports = {
   name: 'ember-localforage-adapter',
-  included: function included(app) {
+  included: function included(app, parentAddon) {
     this._super.included(app);
 
-    app.import(app.bowerDirectory + '/localforage/dist/localforage.js');
+    var target = parentAddon || app;
+    var options = target.options['ember-localforage-adapter'] || {};
+
+    if (!options.disableIncludeLocalforage) {
+      app.import(app.bowerDirectory + '/localforage/dist/localforage.js');
+    }
   }
 };
